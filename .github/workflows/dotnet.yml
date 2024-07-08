@@ -27,7 +27,7 @@ jobs:
         run: dotnet restore ${{ env.PROJECT_PATH }}
 
       - name: Build
-        run: dotnet build --configuration Release
+        run: dotnet build --no-restore --configuration Release
 
       - name: Create Zip File
         uses: papeloto/action-zip@v1
