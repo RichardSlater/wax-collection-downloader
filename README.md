@@ -25,5 +25,5 @@
 The following will create a CSV file (that you can import into Excel or Google Sheets) for the specified user (`quadrellswar`) containing all of the `cards` from the `warsaken` collection.
 
 ```
-wax-collection-download.exe download-collection-wax.exe --collection warsaken --schema cards --account quadrellswar -o c:\quad_warsaken_cards.csv
+download-collection-wax.exe --collection warsaken --schema cards --account quadrellswar -o c:\quad_warsaken_cards.csv
 ```
