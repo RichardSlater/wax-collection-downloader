@@ -26,8 +26,8 @@ jobs:
       - name: Restore Project
         run: dotnet restore ${{ env.PROJECT_PATH }}
 
-      - name: Publish Project
-        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x86 -p:PublishSingleFile=true --no-restore
+      - name: Build
+        run: dotnet build --configuration Release
 
       - name: Create Zip File
         uses: papeloto/action-zip@v1
