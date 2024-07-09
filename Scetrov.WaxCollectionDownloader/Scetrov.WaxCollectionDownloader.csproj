@@ -13,6 +13,9 @@
         <Platforms>x64;ARM64</Platforms>
         <RuntimeIdentifiers>win-x64;win-arm64;linux-x64;linux-arm64;osx-x64;osx-arm64</RuntimeIdentifiers>
         <SelfContained>true</SelfContained>
+        <IsPackable>false</IsPackable>
+        <AssemblyVersion>1.0</AssemblyVersion>
+        <FileVersion>1.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
