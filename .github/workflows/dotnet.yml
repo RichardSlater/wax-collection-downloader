@@ -10,7 +10,7 @@ env:
   PROJECT_PATH: Scetrov.WaxCollectionDownloader/Scetrov.WaxCollectionDownloader.csproj
   OUTPUT_PATH: Scetrov.WaxCollectionDownloader/bin/Release/net8.0
   ZIP_PATH: dist/
-  ZIP_PREFIX: wax-downloader_
+  ZIP_PREFIX: WaxCollectionDownloader_
 
 jobs:
   deploy:
@@ -63,8 +63,8 @@ jobs:
           draft: false
           prerelease: false
       
-      - name: Upload Release Asset
-        id: upload-release-asset 
+      - name: Upload Release Asset (win-x64)
+        id: upload-release-asset-win-x64
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -72,4 +72,59 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-win-x64.zip
           asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-win-x64.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset (win-arm64)
+        id: upload-release-asset-win-arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-win-arm64.zip
+          asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-win-arm64.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset (linux-x64)
+        id: upload-release-asset-linux-x64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-linux-x64.zip
+          asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-linux-x64.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset (linux-arm64)
+        id: upload-release-asset-linux-arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-linux-arm64.zip
+          asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-linux-arm64.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset (osx-x64)
+        id: upload-release-asset-osx-x64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-osx-x64.zip
+          asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-osx-x64.zip
+          asset_content_type: application/zip
+
+      - name: Upload Release Asset (osx-arm64)
+        id: upload-release-asset-osx-arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-osx-arm64.zip
+          asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-osx-arm64.zip
           asset_content_type: application/zip
