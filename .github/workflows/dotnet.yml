@@ -7,9 +7,10 @@ on:
     branches: [ "master" ]
 
 env:
-  PROJECT_PATH: Scetrov.WaxCollectionDownloader\Scetrov.WaxCollectionDownloader.csproj
-  ZIP_PATH: Scetrov.WaxCollectionDownloader/bin/Release/net8.0/Scetrov.WaxCollectionDownloader_${{ github.sha }}.zip
-  EXE_PATH: Scetrov.WaxCollectionDownloader/bin/Release/net8.0/
+  PROJECT_PATH: Scetrov.WaxCollectionDownloader/Scetrov.WaxCollectionDownloader.csproj
+  OUTPUT_PATH: Scetrov.WaxCollectionDownloader/bin/Release/net8.0
+  ZIP_PATH: dist/
+  ZIP_PREFIX: wax-downloader_
 
 jobs:
   deploy:
@@ -40,16 +41,14 @@ jobs:
       - name: Restore Project
         run: dotnet restore ${{ env.PROJECT_PATH }}
 
-      - name: Build
-        run: dotnet build --no-restore --configuration Release
-
-      - name: Create Zip File
-        uses: papeloto/action-zip@v1
-        with:
-          files: ${{ env.EXE_PATH }}
-          dest: ${{ env.ZIP_PATH }}
+      - name: Build and zip outputs
+        run: |
+          for rid in win-x64 win-arm64 linux-x64 linux-arm64 osx-x64 osx-arm64 do
+            dotnet build ${{ env.PROJECT_PATH }} --configuration Release --runtime $rid --no-restore
+            zip -r ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-$rid.zip ${{ env.OUTPUT_PATH }}/$rid
+          done
           
-      - name: Initialize Release
+      - name: Create Release
         uses: actions/create-release@v1
         id: create_release
         env:
@@ -60,9 +59,13 @@ jobs:
           draft: false
           prerelease: false
       
-      - name: Create Release    
-        uses: csexton/release-asset-action@v2
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.ZIP_PATH }}
-          release-url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.ZIP_PATH }}${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-win-x64.zip
+          asset_name: ${{ env.ZIP_PREFIX }}${{ steps.version.outputs.version }}-win-x64.zip
+          asset_content_type: application/zip
