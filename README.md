@@ -1,3 +1,17 @@
+## Installation
+
+The following are the basic steps:
+
+1. [Install the .NET 8 runtime](https://learn.microsoft.com/en-gb/dotnet/core/install/) for your operating system (Windows, Linux or MacOS).
+2. Download and unzip the [latest release](https://github.com/RichardSlater/wax-collection-downloader/releases).
+3. Unzip to your computer.
+4. Open a terminal and change directory to the location you unzipped the file.
+5. Run the command:
+
+```
+download-collection-wax.exe --collection {{ collection name }} --schema {{ schema }} --account {{ account }} -o {{ output file }}
+```
+
 ## Usage
 
 ```
